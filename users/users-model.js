@@ -15,6 +15,7 @@ module.exports = {
     }
 
     function findBy(filter) {
+    console.log("inside find by", filter);
     return db('users') 
     .where(filter) 
     }
