@@ -7,10 +7,12 @@ const secrets = require('../auth/config/secrets.js');
 
 
 router.post('/register', (req, res) => {
-  // implement registration
+  //implement registration
   let user = req.body
   const hash = bcrypt.hashSync(user.password, 10)
   user.password = hash;
+
+  
 
   Users.add(user)
   .then(saved => {
@@ -25,13 +27,13 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   // implement login
 const { username, password } = req.body;
+// let user = req.body
 
-Users
-.findBy({ username })
-.first()
+Users.findBy({ username })
+      .first()
       .then(user => {
         if (user && bcrypt.compareSync(password, user.password)) {
-          const token = getJwtToken(user);
+          const token = getJwtToken(user)
         
           return res.status(200).json({message: `Welcome ${user.username}!`,
             token
@@ -60,7 +62,7 @@ function getJwtToken(user) {
    expiresIn: '8h' 
   }
   
-  return jwt.sign(payload, secrets, options)
+  return jwt.sign(payload, secrets.jwtSecret, options)
 }
 
 module.exports = router;

@@ -20,12 +20,9 @@ it('expects username to be in database', async function() {
 
 
 
-// describe('/api/login', () => {
-// it('expects status to be ', async function() {
+it('expects username to be in database', async function() {
 
-//     const users = await db('users');
-//     expect(response.status).toBe(500);
-// })
-
-// })
+    const users = await db('users');
+    expect(users[0].username).toBe('dave');
+})
 
